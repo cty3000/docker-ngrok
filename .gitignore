@@ -1,0 +1,6 @@
+*~
+.project
+.settings
+META-INF
+build.properties
+*.zip
