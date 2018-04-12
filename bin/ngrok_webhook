@@ -1,0 +1,12 @@
+#!/bin/bash
+
+function webhook {
+  sleep 3
+  NGROK_HOST=`/sbin/route | /usr/bin/awk 'NR==3 {print $2}'`
+  URL=`/usr/bin/curl -s "http://$NGROK_HOST:4040/api/tunnels/command_line" | /usr/bin/jq -r .public_url`
+  /usr/bin/curl -s -X POST -H 'Content-type: application/json' --data "{\"text\":\"ngrok URL: $URL\"}" $WEBHOOK_URL
+}
+
+if [ -n "$WEBHOOK_URL" ]; then
+  webhook &
+fi
